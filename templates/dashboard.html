@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sensex Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav>
+        <div class="logo">SENSEX Prediction</div>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a href="/about">About</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="grid">
+            <div class="card">
+                <h3>Prediction Engine</h3>
+                <p style="margin-bottom: 20px; opacity: 0.7;">Input the current market Open price to generate analysis.</p>
+                <form action="/predict" method="post">
+                    <input type="number" step="any" name="open_price" placeholder="Enter Open Price (e.g. 24500)" required>
+                    <button type="submit" class="btn" style="width:100%">Run Prediction</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <h3>Analysis Results</h3>
+                {% if prediction_text %}
+                    <p style="opacity: 0.7;">Predicted Next Open:</p>
+                    <h1 class="prediction-hero">{{ prediction_text }}</h1>
+                    <p style="color: #facc15; font-weight: bold;">{{ trend_text }}</p>
+                {% else %}
+                    <div style="padding: 40px 0; opacity: 0.4; text-align: center;">Waiting for input...</div>
+                {% endif %}
+            </div>
+
+            {% if bar_chart %}
+                <div class="card">{{ bar_chart | safe }}</div>
+                <div class="card">{{ gauge_chart | safe }}</div>
+            {% endif %}
+
+            <div class="card full-width">
+                <h3>Prediction History</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Input Price</th>
+                            <th>Prediction</th>
+                            <th>Change</th>
+                            <th>Trend</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if history %}
+                            {% for item in history %}
+                            <tr>
+                                <td>₹{{ item.input }}</td>
+                                <td style="color: var(--primary);">₹{{ item.prediction }}</td>
+                                <td>{{ item.change }}</td>
+                                <td>{{ item.trend }}</td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr><td colspan="4" style="text-align:center; opacity:0.5;">No history available yet.</td></tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>About Us</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav>
+        <div class="logo">SENSEX.AI</div>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a href="/about">About</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <div class="card full-width">
+            <h2>About Sensex Prediction Project</h2>
+            <p style="margin-top: 20px; line-height: 1.6;">
+                This project uses a <strong>Linear Regression</strong> machine learning model to predict 
+                the next day's opening price based on historical Nifty 50 data. 
+                Our goal is to provide a clean, interactive interface for traders to visualize 
+                potential market movements.
+            </p>
+        </div>
+    </div>
+</body>
+</html>
